@@ -54,5 +54,19 @@ class ManagerTestCase(unittest.TestCase):
             self.man.work()
 
 
+class ArgrumentTestCase(unittest.TestCase):
+    def test_args_help(self):
+        import sys
+        import tempfile
+        fname = tempfile.mktemp()
+        f = open(fname, mode='w+')
+        from doctor.Managers import DoctorArguments
+        arg = DoctorArguments()
+
+        arg.print_help(file=f)
+        f.seek(0)
+
+        self.assertIsNotNone(f.read())
+
 if __name__ == '__main__':
     unittest.main()

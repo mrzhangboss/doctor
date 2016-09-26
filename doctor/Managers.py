@@ -1,5 +1,6 @@
 # -*- coding:utf-8 -*-
 from __future__ import absolute_import, unicode_literals, print_function
+from argparse import ArgumentParser
 from .Spider import Spider
 
 
@@ -18,3 +19,6 @@ class Manager:
         self.args_parse()
         self.search()
         self.print()
+
+class DoctorArguments(ArgumentParser):
+    pass
