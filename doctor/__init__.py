@@ -11,7 +11,6 @@ class Spider:
     def __init__(self, keyword, filename=''):
         self.keyword = keyword
         self.content = None
-        self.content_type = json
         self.db = DBManage(filename)
 
     def search(self):
