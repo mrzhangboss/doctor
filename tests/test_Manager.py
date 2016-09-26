@@ -53,20 +53,62 @@ class ManagerTestCase(unittest.TestCase):
 
             self.man.work()
 
+    @patch('doctor.Managers.DoctorArguments')
+    @patch('sys.argv')
+    def test_args_parse_take_null_args(self, argv_mock, Argument_Mock):
+        argv_mock.__len__.return_value = 1
+        print_help = Mock()
+        Argument_Mock.return_value.print_help = print_help
+
+        with self.assertRaises(SystemExit):
+            self.man.args_parse()
+
+        self.assertEqual(print_help.call_count, 1)
+
+    @patch('doctor.Managers.DoctorArguments')
+    @patch('sys.argv')
+    def test_args_parse_take_one_args(self, argv_mock, Argument_Mock):
+        argv_mock.__len__.return_value = 2
+        print_help = Mock()
+        Argument_Mock.return_value.print_help = print_help
+
+        self.man.args_parse()
+
+        self.assertEqual(print_help.call_count, 0)
+
+    @patch('doctor.Managers.DoctorArguments')
+    @patch('sys.argv')
+    def test_args_parse_return_man_args(self, argv_mock, Argument_Mock):
+        argv_mock.__len__.return_value = 2
+
+        result = self.man.args_parse()
+
+        self.assertEqual(result, self.man.args)
+
+
+
+
+
+
 
 class ArgrumentTestCase(unittest.TestCase):
-    def test_args_help(self):
-        import sys
-        import tempfile
-        fname = tempfile.mktemp()
-        f = open(fname, mode='w+')
+    def setUp(self):
         from doctor.Managers import DoctorArguments
-        arg = DoctorArguments()
+        self.arg = DoctorArguments()
 
-        arg.print_help(file=f)
-        f.seek(0)
+    def test_args_help(self):
+        self.assertIsNone(self.arg.print_help())
 
-        self.assertIsNotNone(f.read())
+    def test_args_can_parse(self):
+        a = self.arg.parse_args(['hello'])
+
+        self.assertEqual(a.word, 'hello')
+
+    def test_args_can_parse_two_words(self):
+        with self.assertRaises(SystemExit):
+            a2 = self.arg.parse_args(['hello', 'hello2'])
+            self.assertFalse()
+
 
 if __name__ == '__main__':
     unittest.main()
