@@ -12,6 +12,8 @@ import doctor
 
 class ManagerTestCase(unittest.TestCase):
     def setUp(self):
+        sys_argv = patch('sys.argv')
+        self.argv_mock = sys_argv.start()
         self.man = doctor.Manager()
 
     def test_manage_begin(self):
@@ -54,9 +56,8 @@ class ManagerTestCase(unittest.TestCase):
             self.man.work()
 
     @patch('doctor.Managers.DoctorArguments')
-    @patch('sys.argv')
-    def test_args_parse_take_null_args(self, argv_mock, Argument_Mock):
-        argv_mock.__len__.return_value = 1
+    def test_args_parse_take_null_args(self, Argument_Mock):
+        self.argv_mock.__len__.return_value = 1
         print_help = Mock()
         Argument_Mock.return_value.print_help = print_help
 
@@ -66,9 +67,8 @@ class ManagerTestCase(unittest.TestCase):
         self.assertEqual(print_help.call_count, 1)
 
     @patch('doctor.Managers.DoctorArguments')
-    @patch('sys.argv')
-    def test_args_parse_take_one_args(self, argv_mock, Argument_Mock):
-        argv_mock.__len__.return_value = 2
+    def test_args_parse_take_one_args(self, Argument_Mock):
+        self.argv_mock.__len__.return_value = 2
         print_help = Mock()
         Argument_Mock.return_value.print_help = print_help
 
@@ -77,18 +77,12 @@ class ManagerTestCase(unittest.TestCase):
         self.assertEqual(print_help.call_count, 0)
 
     @patch('doctor.Managers.DoctorArguments')
-    @patch('sys.argv')
-    def test_args_parse_return_man_args(self, argv_mock, Argument_Mock):
-        argv_mock.__len__.return_value = 2
+    def test_args_parse_return_man_args(self, Argument_Mock):
+        self.argv_mock.__len__.return_value = 2
 
         result = self.man.args_parse()
 
         self.assertEqual(result, self.man.args)
-
-
-
-
-
 
 
 class ArgrumentTestCase(unittest.TestCase):
