@@ -24,9 +24,9 @@ class ManagerTestCase(unittest.TestCase):
         search_mock = Mock()
         Spider_mock.return_value.search = search_mock
 
-        self.man.search('hello')
+        self.man.search({'keyword': 'hello'})
 
-        Spider_mock.assert_called_once_with('hello')
+        Spider_mock.assert_called_once_with(keyword='hello')
         self.assertEqual(search_mock.call_count, 1)
 
     @patch('doctor.Managers.Spider')
@@ -34,7 +34,7 @@ class ManagerTestCase(unittest.TestCase):
         result = Mock()
         Spider_mock.return_value.search.return_value = result
 
-        res = self.man.search('hello')
+        res = self.man.search({'keyword': 'hello'})
 
         self.assertEqual(res, result)
 
@@ -55,7 +55,7 @@ class ManagerTestCase(unittest.TestCase):
             print_mock.side_effect = side_effect(search_mock)
 
             self.man.work()
-            
+
             search_mock.assert_called_once_with(args_mock)
 
 
@@ -89,6 +89,9 @@ class ManagerTestCase(unittest.TestCase):
         self.assertEqual(result, self.man.args)
 
 
+
+
+
 class ArgrumentTestCase(unittest.TestCase):
     def setUp(self):
         from doctor.Managers import DoctorArguments
@@ -100,7 +103,7 @@ class ArgrumentTestCase(unittest.TestCase):
     def test_args_can_parse(self):
         a = self.arg.parse_args(['hello'])
 
-        self.assertEqual(a.word, 'hello')
+        self.assertEqual(a.keyword, 'hello')
 
     def test_args_can_parse_two_words(self):
         with self.assertRaises(SystemExit):

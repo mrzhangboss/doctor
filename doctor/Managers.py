@@ -8,8 +8,8 @@ class Manager:
     def __init__(self):
         self.args = {'word': None}
 
-    def search(self, keyword):
-        spi = Spider(keyword)
+    def search(self, args):
+        spi = Spider(**args)
         return spi.search()
 
     def args_parse(self):
@@ -17,7 +17,7 @@ class Manager:
         if len(sys.argv) < 2:
             args_parser.print_help()
             sys.exit(0)
-        self.args = args_parser.parse_args()
+        self.args = vars(args_parser.parse_args())
         return self.args
 
     def print(self):
@@ -31,6 +31,6 @@ class Manager:
 class DoctorArguments(ArgumentParser):
     def __init__(self):
         super().__init__()
-        self.add_argument('word', metavar='Words', type=str)
+        self.add_argument('keyword', metavar='Words', type=str)
         self.description = 'Doctor: help you a better English'
         self.prog = 'Doctor'
