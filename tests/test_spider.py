@@ -49,7 +49,7 @@ class SpiderTestCase(unittest.TestCase):
     def test_search_json_data(self):
         import json
         self.spider.search()
-        self.assertEqual(type(self.spider.result.content), dict)
+        self.assertEqual(type(self.spider.result), dict)
 
     @patch('doctor.requests.get')
     def test_search_call_get_with_youdao_api(self, mock_requests):
@@ -67,4 +67,4 @@ class SpiderTestCase(unittest.TestCase):
 
         self.spider.search()
 
-        self.assertEqual(self.spider.result.content, json_data)
+        self.assertEqual(self.spider.result, json_data)

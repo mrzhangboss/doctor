@@ -24,9 +24,8 @@ class Spider:
         self.db.select(self.keyword)
         self.content = 'find'
 
-    # todo: return content instead spider itself
     @property
     def result(self):
         self.find()
         self.search()
-        return self
+        return self.content
