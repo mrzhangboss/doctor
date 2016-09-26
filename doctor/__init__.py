@@ -45,3 +45,7 @@ class DBManage:
 
     def delete(self, keyword):
         return False
+
+#todo: set apart from every module
+class Manage:
+    pass
