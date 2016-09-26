@@ -6,4 +6,4 @@ from .Spider import Spider
 class Manager:
     def search(self, keyword):
         spi = Spider(keyword)
-        spi.search()
+        return spi.search()

@@ -10,20 +10,30 @@ except ImportError:
 import doctor
 
 class ManagerTestCase(unittest.TestCase):
+    def setUp(self):
+        self.man = doctor.Manager()
+
     def test_manage_begin(self):
-        man = doctor.Manager()
-        self.assertIsNotNone(man)
+        self.assertIsNotNone(self.man)
 
     @patch('doctor.Managers.Spider')
     def test_manage_use_spider_get_content(self, Spider_mock):
         search_mock = Mock()
         Spider_mock.return_value.search = search_mock
 
-        man = doctor.Manager()
-        man.search('hello')
+        self.man.search('hello')
 
         Spider_mock.assert_called_once_with('hello')
         self.assertEqual(search_mock.call_count, 1)
+
+    @patch('doctor.Managers.Spider')
+    def test_manage_return_spider_result(self, Spider_mock):
+        result = Mock()
+        Spider_mock.return_value.search.return_value = result
+
+        res = self.man.search('hello')
+
+        self.assertEqual(res, result)
 
 
 if __name__ == '__main__':
