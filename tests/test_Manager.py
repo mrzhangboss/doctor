@@ -9,6 +9,7 @@ except ImportError:
 
 import doctor
 
+
 class ManagerTestCase(unittest.TestCase):
     def setUp(self):
         self.man = doctor.Manager()
@@ -34,6 +35,23 @@ class ManagerTestCase(unittest.TestCase):
         res = self.man.search('hello')
 
         self.assertEqual(res, result)
+
+    def test_manage_color_print(self):
+        self.man.print()
+
+    def test_work_arg_parse_then_search_then_print(self):
+        with patch.object(self.man, 'args_parse') as parse_mock, \
+                patch.object(self.man, 'search') as search_mock, \
+                patch.object(self.man, 'print') as print_mock:
+            def side_effect(mock, num=1):
+                def _side_effect():
+                    self.assertEqual(mock.call_count, num)
+                return _side_effect
+
+            search_mock.side_effect = side_effect(parse_mock)
+            print_function.side_effect = side_effect(search_mock)
+
+            self.man.work()
 
 
 if __name__ == '__main__':

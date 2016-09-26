@@ -7,3 +7,14 @@ class Manager:
     def search(self, keyword):
         spi = Spider(keyword)
         return spi.search()
+
+    def args_parse(self):
+        pass
+
+    def print(self):
+        pass
+
+    def work(self):
+        self.args_parse()
+        self.search()
+        self.print()
