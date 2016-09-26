@@ -6,12 +6,13 @@ import requests
 
 class Spider:
     youdao_api = 'http://fanyi.youdao.com/openapi.do?keyfrom={keyfrom}&key={key}&type=data&doctype=json&version=1.1&q={keyword}'
-    keyfrom = 'EnglishSearcher'
-    key = '1098649915'
-    def __init__(self, keyword, filename=''):
+
+    def __init__(self, keyword, filename='', keyfrom='EnglishSearcher', key='1098649915'):
         self.keyword = keyword
         self.content = None
         self.db = DBManage(filename)
+        self.keyfrom = keyfrom
+        self.key = key
 
     def search(self):
         url = self.youdao_api.format(keyfrom=self.keyfrom, key=self.key, keyword=self.keyword)
