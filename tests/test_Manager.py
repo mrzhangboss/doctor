@@ -44,16 +44,20 @@ class ManagerTestCase(unittest.TestCase):
     def test_work_arg_parse_then_search_then_print(self):
         with patch.object(self.man, 'args_parse') as parse_mock, \
                 patch.object(self.man, 'search') as search_mock, \
+                patch.object(self.man, 'args') as args_mock, \
                 patch.object(self.man, 'print') as print_mock:
             def side_effect(mock, num=1):
-                def _side_effect():
+                def _side_effect(*args, **kwargs):
                     self.assertEqual(mock.call_count, num)
                 return _side_effect
 
             search_mock.side_effect = side_effect(parse_mock)
-            print_function.side_effect = side_effect(search_mock)
+            print_mock.side_effect = side_effect(search_mock)
 
             self.man.work()
+            
+            search_mock.assert_called_once_with(args_mock)
+
 
     @patch('doctor.Managers.DoctorArguments')
     def test_args_parse_take_null_args(self, Argument_Mock):

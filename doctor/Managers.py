@@ -5,6 +5,9 @@ from argparse import ArgumentParser
 from .Spider import Spider
 
 class Manager:
+    def __init__(self):
+        self.args = {'word': None}
+
     def search(self, keyword):
         spi = Spider(keyword)
         return spi.search()
@@ -22,7 +25,7 @@ class Manager:
 
     def work(self):
         self.args_parse()
-        self.search()
+        self.search(self.args)
         self.print()
 
 class DoctorArguments(ArgumentParser):
