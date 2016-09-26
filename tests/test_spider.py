@@ -46,8 +46,25 @@ class SpiderTestCase(unittest.TestCase):
             self.spider.find()
             select_mock.assert_called_once_with(self.spider.keyword)
 
-    def test_find_json_data(self):
+    def test_search_json_data(self):
         import json
-        self.spider.find()
+        self.spider.search()
         self.assertEqual(self.spider.result.content_type, json)
 
+    @patch('doctor.requests.get')
+    def test_search_call_get_with_youdao_api(self, mock_requests):
+        self.spider.search()
+        mock_requests.assert_called_once_with(self.spider.youdao_api.format(key=self.spider.key,
+                                                                            keyfrom=self.spider.keyfrom,
+                                                                            keyword=self.spider.keyword))
+
+    @patch('doctor.requests.get')
+    def test_search_result_is_from_requests_get(self, get_mock):
+        get = Mock()
+        get_mock.return_value.json = get
+        json_data = Mock
+        get.return_value = json_data
+
+        self.spider.search()
+
+        self.assertEqual(self.spider.result.content, json_data)

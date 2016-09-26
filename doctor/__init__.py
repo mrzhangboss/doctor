@@ -15,7 +15,9 @@ class Spider:
         self.db = DBManage(filename)
 
     def search(self):
-        self.content = True
+        url = self.youdao_api.format(keyfrom=self.keyfrom, key=self.key, keyword=self.keyword)
+        response = requests.get(url)
+        self.content = response.json()
 
     def find(self):
         self.db.select(self.keyword)
