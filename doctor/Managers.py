@@ -1,23 +1,9 @@
 # -*- coding:utf-8 -*-
 from __future__ import absolute_import, unicode_literals, print_function
+from .Spider import Spider
 
 
-class DBManage:
-    def __init__(self, filename):
-        pass
-
-    def select(self, keyword):
-        pass
-
-    def update(self, keyword):
-        return False
-
-    def insert(self, keyword, data):
-        return False
-
-    def delete(self, keyword):
-        return False
-
-#todo: set apart from every module
-class Manage:
-    pass
+class Manager:
+    def search(self, keyword):
+        spi = Spider(keyword)
+        spi.search()

@@ -2,7 +2,7 @@
 from __future__ import absolute_import, unicode_literals, print_function
 import json
 import requests
-from .Managers import DBManage
+from .DBManagers import DBManage
 
 
 class Spider:
