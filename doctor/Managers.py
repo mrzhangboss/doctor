@@ -44,6 +44,9 @@ class PrintManager:
     def __init__(self, data):
         self.data = data
 
+    # todo: make print more flexiable
     def print(self):
         if 'query' in self.data:
             print(self.data['query'])
+        if 'translation' in self.data:
+            print(self.data['translation'])

@@ -147,6 +147,14 @@ class PrintManagerTest(unittest.TestCase):
 
         self.assertIn('hello', out)
 
+    def test_print_translation(self):
+        p = self.Print({'translation': '你好', 'query': 'hello'})
+        p.print()
+
+        out = self.line_assert_equal(self.sys_file, 2)
+
+        self.assertIn('你好', out)
+
 
 class ArgrumentManageTest(unittest.TestCase):
     def setUp(self):
