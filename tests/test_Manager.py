@@ -113,6 +113,7 @@ class PrintManagerTest(unittest.TestCase):
         import sys
         import tempfile
         filename = tempfile.mktemp()  #use filename will not read anything
+        print(filename)
         self.sys_stdout = sys.stdout
         class_file = open(filename, mode='w+')
         sys.stdout = class_file
@@ -148,12 +149,33 @@ class PrintManagerTest(unittest.TestCase):
         self.assertIn('hello', out)
 
     def test_print_translation(self):
-        p = self.Print({'translation': '你好', 'query': 'hello'})
+        p = self.Print({'translation': ['你好'], 'query': 'hello'})
         p.print()
 
         out = self.line_assert_equal(self.sys_file, 2)
 
         self.assertIn('你好', out)
+
+    def test_print_translation_and_query_order(self):
+        p = self.Print({'translation': ['你好'], 'query': 'hello'})
+        p.print()
+
+        out = self.line_assert_equal(self.sys_file, 2)
+
+        lines = out.split('\n')
+        self.assertIn('hello', lines[0])
+        self.assertIn('你好', lines[2])
+
+    @unittest.skip
+    def test_print_hello(self):
+
+        data = {"translation":["你好"],"basic":{"us-phonetic":"hɛˈlo, hə-","phonetic":"hə\'ləʊ; he-","uk-phonetic":"hə\'ləʊ; he-","explains":["n. 表示问候， 惊奇或唤起注意时的用语","int. 喂；哈罗","n. (Hello)人名；(法)埃洛"]},"query":"hello","errorCode":0,"web":[{"value":["你好","您好","Hello"],"key":"Hello"},{"value":["凯蒂猫","昵称","匿称"],"key":"Hello Kitty"},{"value":["哈乐哈乐","乐扣乐扣"],"key":"Hello Bebe"}]}
+        p = self.Print(data)
+        p.print()
+
+        self.assertEqual(True, False)
+
+
 
 
 class ArgrumentManageTest(unittest.TestCase):

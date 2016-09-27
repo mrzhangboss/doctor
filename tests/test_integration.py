@@ -6,28 +6,34 @@ try:
     from unittest.mock import patch, Mock
 except ImportError:
     from mock import patch, Mock
-
+import sys
+import tempfile
 import doctor
 
 
 class IntegationTestCase(unittest.TestCase):
-    def test_manage_work(self):
-        import sys
-        from sys import stdout
-        from sys import argv
-        import sys
-        import tempfile
+    def setUp(self):
         filename = tempfile.mktemp()
-        f = open(filename, 'w+')
-        stdout = f
-        sys_argv = sys.argv
+        print(filename)
+        self.sys_file = open(filename, 'w+')
+        self.sys_stdout = sys.stdout
+        self.sys_argv = sys.argv
+
+        sys.stdout = self.sys_file
+        sys.argv = ['main.py', 'hello']
+
+    def tearDown(self):
+        sys.stdout = self.sys_stdout
+        sys.argv = self.sys_argv
+
+    def test_manage_work(self):
         sys.argv = ['main.py', 'hello']
 
         man = doctor.Manager()
 
         man.work()
 
-        sys.argv = sys_argv
-        f.seek(0)
-        out = f.read()
-        self.assertEqual(len(out) > 1, True)
+        self.sys_file.seek(0)
+        out = self.sys_file.read()
+        self.assertEqual(len(out) > 0, True)
+
