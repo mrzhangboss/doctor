@@ -7,10 +7,13 @@ from .Spider import Spider
 class Manager:
     def __init__(self):
         self.args = {'word': None}
+        self.data = {}
 
     def search(self, args):
         spi = Spider(**args)
-        return spi.search()
+        spi.search()
+        self.data = spi.result
+        return self.data
 
     def args_parse(self):
         args_parser = DoctorArguments()
@@ -21,7 +24,7 @@ class Manager:
         return self.args
 
     def print(self):
-        pass
+        pr = PrintManager(self.data)
 
     def work(self):
         self.args_parse()
@@ -34,3 +37,8 @@ class DoctorArguments(ArgumentParser):
         self.add_argument('keyword', metavar='Words', type=str)
         self.description = 'Doctor: help you a better English'
         self.prog = 'Doctor'
+
+
+class PrintManager:
+    def __init__(self, data):
+        self.data = data

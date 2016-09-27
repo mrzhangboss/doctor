@@ -32,7 +32,7 @@ class ManagerTestCase(unittest.TestCase):
     @patch('doctor.Managers.Spider')
     def test_manage_return_spider_result(self, Spider_mock):
         result = Mock()
-        Spider_mock.return_value.search.return_value = result
+        Spider_mock.return_value.result = result
 
         res = self.man.search({'keyword': 'hello'})
 
@@ -89,10 +89,25 @@ class ManagerTestCase(unittest.TestCase):
         self.assertEqual(result, self.man.args)
 
 
+    @patch('doctor.Managers.PrintManager')
+    def test_print_use_PrintManager(self, PrintManager_Mock):
+        self.man.print()
+
+        self.assertEqual(PrintManager_Mock.call_count, 1)
+        PrintManager_Mock.assert_called_once_with(self.man.data)
+
+    @patch('doctor.Managers.PrintManager')
+    def test_print_use_search_data(self, PrintManager_Mock):
+        data = self.man.search({'keyword': 'hello'})
+        self.man.print()
+
+        PrintManager_Mock.assert_called_once_with(data)
 
 
 
-class ArgrumentTestCase(unittest.TestCase):
+
+
+class ArgrumentManageTest(unittest.TestCase):
     def setUp(self):
         from doctor.Managers import DoctorArguments
         self.arg = DoctorArguments()
