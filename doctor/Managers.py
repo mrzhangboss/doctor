@@ -25,6 +25,7 @@ class Manager:
 
     def print(self):
         pr = PrintManager(self.data)
+        pr.print()
 
     def work(self):
         self.args_parse()
@@ -42,3 +43,7 @@ class DoctorArguments(ArgumentParser):
 class PrintManager:
     def __init__(self, data):
         self.data = data
+
+    def print(self):
+        if 'query' in self.data:
+            print(self.data['query'])

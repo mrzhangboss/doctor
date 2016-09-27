@@ -97,14 +97,55 @@ class ManagerTestCase(unittest.TestCase):
         PrintManager_Mock.assert_called_once_with(self.man.data)
 
     @patch('doctor.Managers.PrintManager')
-    def test_print_use_search_data(self, PrintManager_Mock):
+    def test_print_use_search_data_and_print(self, PrintManager_Mock):
+        print_mock = Mock()
+        PrintManager_Mock.return_value.print = print_mock
+
         data = self.man.search({'keyword': 'hello'})
         self.man.print()
 
         PrintManager_Mock.assert_called_once_with(data)
+        self.assertEqual(print_mock.call_count, 1)
 
 
+class PrintManagerTest(unittest.TestCase):
+    def setUp(self):
+        import sys
+        import tempfile
+        filename = tempfile.mktemp()  #use filename will not read anything
+        self.sys_stdout = sys.stdout
+        class_file = open(filename, mode='w+')
+        sys.stdout = class_file
+        self.sys_file = class_file
+        from doctor.Managers import PrintManager
+        self.Print = PrintManager
 
+    def tearDown(self):
+        import sys
+        self.sys_file.close()
+        sys.stdout = self.sys_stdout
+
+    def line_assert_equal(self, sys_file, num):
+        real_n = 0
+        content = []
+        sys_file.seek(0)
+        while True:
+            line = sys_file.readline()
+            if line == '':
+                break
+            else:
+                real_n += 1
+                content.append(line)
+        assert num == real_n
+        return '\n'.join(content)
+
+    def test_print_query(self):
+        p = self.Print({'query': 'hello'})
+        p.print()
+
+        out = self.line_assert_equal(self.sys_file, 1)
+
+        self.assertIn('hello', out)
 
 
 class ArgrumentManageTest(unittest.TestCase):
