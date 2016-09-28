@@ -48,7 +48,7 @@ class PrintManager:
     print_module = {
         'query': [lambda x: '词: {}'.format(colored(x, 'green')), 1],
         'translation': [lambda x: '翻译: {}'.format(', '.join([colored(y, 'blue') for y in x])), 2],
-        'basic': [lambda x: '英: [{uk-phonetic}] 美: [{us-phonetic}] 英标: [{phonetic}]\n解释:\n{explains}'.format(**(print_basic(x)), explains=print_basic_explains(x['explains'])), 3],
+        'basic': [lambda x: '英: [{uk-phonetic}] 美: [{us-phonetic}] 英标: [{phonetic}]\n解释:\n{explains}'.format(explains=print_basic_explains(x['explains']), **(print_basic(x))), 3],
         'web': [lambda x: '其他意思:\n{web}'.format(web=print_web(x)), 4]
     }
     def __init__(self, data):
