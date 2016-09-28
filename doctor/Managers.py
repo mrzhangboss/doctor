@@ -34,8 +34,8 @@ class Manager:
         self.print()
 
 class DoctorArguments(ArgumentParser):
-    def __init__(self):
-        super().__init__()
+    def __init__(self, *args, **kwargs):
+        super(DoctorArguments, self).__init__(*args, **kwargs)
         self.add_argument('keyword', metavar='Words', type=str)
         self.description = 'Doctor: help you a better English'
         self.prog = 'Doctor'
