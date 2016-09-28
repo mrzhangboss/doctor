@@ -2,7 +2,6 @@
 from __future__ import absolute_import, unicode_literals, print_function
 import sys
 from argparse import ArgumentParser
-# todo: add  termcolor to require.txt
 from termcolor import colored
 from .Spider import Spider
 

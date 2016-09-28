@@ -9,7 +9,7 @@ setup(
     author='zhanglun',
     author_email='zhanglun.me@gmail.com',
     packages=['doctor'],
-    # package_dir={'':'doctor'},
+    install_requires=['termcolor'],
     entry_points={
         'console_scripts':[
             'dictman = doctor.main:main'
