@@ -17,10 +17,15 @@
          2.----
 
 
-
+ps:
+if you meet when install
+                "'package' must be a string (dot-separated), list, or tuple")
+            TypeError: 'package' must be a string (dot-separated), list, or tuple
+please update you setuptools by use `pip install setuptools`
 
 ### use Apache 2.0 LICENSE
 
 ## version diff
 
+v0.1.1 add warning
 v0.1.0 finish word search in python3
