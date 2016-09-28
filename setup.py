@@ -3,7 +3,7 @@ from __future__ import absolute_import, unicode_literals, print_function
 from setuptools import setup, find_packages
 
 setup(
-    name='doctor',
+    name='dictman',
     version='0.1.0',
     description='a English word shell finder',
     author='zhanglun',
@@ -12,7 +12,7 @@ setup(
     # package_dir={'':'doctor'},
     entry_points={
         'console_scripts':[
-            'doctor = doctor.main:main'
+            'dictman = doctor.main:main'
         ]
     }
 

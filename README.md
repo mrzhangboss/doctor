@@ -1,16 +1,16 @@
 # doctor
-> English doctor help you correct words and the paraphrasing.
-> a word you don't know, you can easy use `doctor xxx`,if you don't save it in database,
+> English dictionary man help you correct words and the paraphrasing.
+> a word you don't know, you can easy use `dictman xxx`,if you don't save it in database,
 > it will search Internet,if you once save you can easy correct them from your database.
 
 #### build by TTD
 
 ## Setup
 
-    pip install doctor
+    pip install dictman
 
 ## Use
-    $doctor xxx
+    $dictman xxx
     英音[ ]  美音[]
     意思: ----
     例句: 1.----
