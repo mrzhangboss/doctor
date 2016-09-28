@@ -55,7 +55,6 @@ class PrintManager:
     def __init__(self, data):
         self.data = data
 
-    # todo: make print more flexiable
     def print(self):
         print_data = []
         for v in self.data:
