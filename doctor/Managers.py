@@ -61,4 +61,4 @@ class PrintManager:
                 print_data.append((self.print_module[v][1], self.print_module[v][0](self.data[v])))
         print_data.sort()
         for i, p in print_data:
-            print(p)
+            print(p.encode('utf-8'))
