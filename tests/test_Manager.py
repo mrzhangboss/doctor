@@ -7,19 +7,19 @@ try:
 except ImportError:
     from mock import patch, Mock
 
-import doctor
+import dictman
 
 
 class ManagerTestCase(unittest.TestCase):
     def setUp(self):
         sys_argv = patch('sys.argv')
         self.argv_mock = sys_argv.start()
-        self.man = doctor.Manager()
+        self.man = dictman.Manager()
 
     def test_manage_begin(self):
         self.assertIsNotNone(self.man)
 
-    @patch('doctor.Managers.Spider')
+    @patch('dictman.Managers.Spider')
     def test_manage_use_spider_get_content(self, Spider_mock):
         search_mock = Mock()
         Spider_mock.return_value.search = search_mock
@@ -29,7 +29,7 @@ class ManagerTestCase(unittest.TestCase):
         Spider_mock.assert_called_once_with(keyword='hello')
         self.assertEqual(search_mock.call_count, 1)
 
-    @patch('doctor.Managers.Spider')
+    @patch('dictman.Managers.Spider')
     def test_manage_return_spider_result(self, Spider_mock):
         result = Mock()
         Spider_mock.return_value.result = result
@@ -59,7 +59,7 @@ class ManagerTestCase(unittest.TestCase):
             search_mock.assert_called_once_with(args_mock)
 
 
-    @patch('doctor.Managers.DoctorArguments')
+    @patch('dictman.Managers.DoctorArguments')
     def test_args_parse_take_null_args(self, Argument_Mock):
         self.argv_mock.__len__.return_value = 1
         print_help = Mock()
@@ -70,7 +70,7 @@ class ManagerTestCase(unittest.TestCase):
 
         self.assertEqual(print_help.call_count, 1)
 
-    @patch('doctor.Managers.DoctorArguments')
+    @patch('dictman.Managers.DoctorArguments')
     def test_args_parse_take_one_args(self, Argument_Mock):
         self.argv_mock.__len__.return_value = 2
         print_help = Mock()
@@ -80,7 +80,7 @@ class ManagerTestCase(unittest.TestCase):
 
         self.assertEqual(print_help.call_count, 0)
 
-    @patch('doctor.Managers.DoctorArguments')
+    @patch('dictman.Managers.DoctorArguments')
     def test_args_parse_return_man_args(self, Argument_Mock):
         self.argv_mock.__len__.return_value = 2
 
@@ -89,14 +89,14 @@ class ManagerTestCase(unittest.TestCase):
         self.assertEqual(result, self.man.args)
 
 
-    @patch('doctor.Managers.PrintManager')
+    @patch('dictman.Managers.PrintManager')
     def test_print_use_PrintManager(self, PrintManager_Mock):
         self.man.print()
 
         self.assertEqual(PrintManager_Mock.call_count, 1)
         PrintManager_Mock.assert_called_once_with(self.man.data)
 
-    @patch('doctor.Managers.PrintManager')
+    @patch('dictman.Managers.PrintManager')
     def test_print_use_search_data_and_print(self, PrintManager_Mock):
         print_mock = Mock()
         PrintManager_Mock.return_value.print = print_mock
@@ -118,7 +118,7 @@ class PrintManagerTest(unittest.TestCase):
         class_file = open(filename, mode='w+')
         sys.stdout = class_file
         self.sys_file = class_file
-        from doctor.Managers import PrintManager
+        from dictman.Managers import PrintManager
         self.Print = PrintManager
 
     def tearDown(self):
@@ -180,7 +180,7 @@ class PrintManagerTest(unittest.TestCase):
 
 class ArgrumentManageTest(unittest.TestCase):
     def setUp(self):
-        from doctor.Managers import DoctorArguments
+        from dictman.Managers import DoctorArguments
         self.arg = DoctorArguments()
 
     def test_args_help(self):

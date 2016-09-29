@@ -4,15 +4,15 @@ from setuptools import setup, find_packages
 
 setup(
     name='dictman',
-    version='0.1.0',
+    version='0.1.3',
     description='a English word shell finder',
     author='zhanglun',
     author_email='zhanglun.me@gmail.com',
-    packages=['doctor'],
+    packages=['dictman'],
     install_requires=['termcolor'],
     entry_points={
         'console_scripts':[
-            'dictman = doctor.main:main'
+            'dictman = dictman.main:main'
         ]
     }
 

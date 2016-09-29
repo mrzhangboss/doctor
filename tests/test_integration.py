@@ -8,7 +8,7 @@ except ImportError:
     from mock import patch, Mock
 import sys
 import tempfile
-import doctor
+import dictman
 
 
 class IntegationTestCase(unittest.TestCase):
@@ -29,7 +29,7 @@ class IntegationTestCase(unittest.TestCase):
     def test_manage_work(self):
         sys.argv = ['main.py', 'hello']
 
-        man = doctor.Manager()
+        man = dictman.Manager()
 
         man.work()
 

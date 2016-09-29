@@ -1,4 +1,4 @@
-# doctor
+# dictman
 > English dictionary man help you correct words and the paraphrasing.
 > a word you don't know, you can easy use `dictman xxx`,if you don't save it in database,
 > it will search Internet,if you once save you can easy correct them from your database.
@@ -27,5 +27,6 @@ please update you setuptools by use `pip install setuptools`
 
 ## version diff
 
-v0.1.1 add warning
+v0.1.2 rename `dictman`
+v0.1.1 add warning and make it work well in python2.7
 v0.1.0 finish word search in python3

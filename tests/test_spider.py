@@ -6,13 +6,13 @@ try:
 except ImportError:
     from mock import patch, Mock
 
-import doctor
+import dictman
 
 
 
 class SpiderTestCase(unittest.TestCase):
     def setUp(self):
-        self.spider = doctor.Spider('hello')
+        self.spider = dictman.Spider('hello')
 
     def test_spider_get_result_is_not_null(self):
         self.assertEqual(self.spider.result!=None, True)
@@ -51,14 +51,14 @@ class SpiderTestCase(unittest.TestCase):
         self.spider.search()
         self.assertEqual(type(self.spider.result), dict)
 
-    @patch('doctor.requests.get')
+    @patch('dictman.requests.get')
     def test_search_call_get_with_youdao_api(self, mock_requests):
         self.spider.search()
         mock_requests.assert_called_once_with(self.spider.youdao_api.format(key=self.spider.key,
                                                                             keyfrom=self.spider.keyfrom,
                                                                             keyword=self.spider.keyword))
 
-    @patch('doctor.requests.get')
+    @patch('dictman.requests.get')
     def test_search_result_is_from_requests_get(self, get_mock):
         get = Mock()
         get_mock.return_value.json = get

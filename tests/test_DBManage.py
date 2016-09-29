@@ -6,14 +6,14 @@ try:
 except ImportError:
     from mock import patch, Mock
 
-import doctor
+import dictman
 
 
 class DBManageTest(unittest.TestCase):
     def setUp(self):
         import tempfile
         f = tempfile.mktemp()
-        manage = doctor.DBManage(f)
+        manage = dictman.DBManage(f)
         self.manage = manage
 
     def test_select(self):
